@@ -85,3 +85,29 @@ Promise.all([fetchUser, fetchPosts, fetchComments])
 
 
 // TODO - Promise.AllSettled
+/*
+Promise.allSettled is a method that takes an array of promise and returns a single promise. 
+This returned promise resolves when all the input promises are resolved or rejected. 
+*/
+
+const prom1 = Promise.resolve(1)
+const prom2 = Promise.reject(2)
+const prom3 = Promise.resolve(3)
+
+Promise.allSettled([prom1,prom2,prom3]).then(console.log).catch(console.log)
+
+// Fetching Multiple APIs with Errors
+const fetchUs = fetch("https://jsonplaceholder.typicode.com/users/1");
+const fetchPo = fetch("https://jsonplaceholder.typicode.com/posts");
+const fetchCo = fetch("https://jsonplaceholder.typicode.com/comments");
+
+Promise.allSettled([fetchUser,fetchPosts,fetchComments])
+        .then(results => {
+            results.forEach((result,index)=>{
+                if (result.status==="fulfilled") {
+                    console.log(`Promise ${index + 1} fulfilled with:`, result.value);                    
+                } else{
+                    console.error(`Promise ${index + 1} rejected with:`, result.reason);
+                }
+            })
+        })
