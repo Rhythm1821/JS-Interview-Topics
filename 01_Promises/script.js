@@ -24,8 +24,8 @@ const promise = new Promise((resolve, reject) => {
             reject('Failed');
         }
     }, 100);
-  });
-  
+});
+
 
 // Promise.all
 
@@ -58,16 +58,16 @@ const promise3 = Promise.resolve(3)
 const promisesArr = [promise1, promise2, promise3]
 
 const promiseAll = Promise.all(promisesArr)
-                    .then(console.log)
-                    .catch(console.log);
+    .then(console.log)
+    .catch(console.log);
 
 
 // Handling rejections
-const p1 = new Promise.resolve(1)                    
-const p2 = new Promise.reject(2)                    
-const p3 = new Promise.resolve(3)                    
+const p1 = new Promise.resolve(1)
+const p2 = new Promise.reject(2)
+const p3 = new Promise.resolve(3)
 
-const allPromises = Promise.all([p1,p2,p3]).then(console.log).catch(console.log)
+const allPromises = Promise.all([p1, p2, p3]).then(console.log).catch(console.log)
 
 // Fetching multiple APIs
 const fetchUser = fetch("https://jsonplaceholder.typicode.com/users/1");
@@ -84,7 +84,6 @@ Promise.all([fetchUser, fetchPosts, fetchComments])
     .catch(error => console.log(error))
 
 
-// TODO - Promise.AllSettled
 /*
 Promise.allSettled is a method that takes an array of promise and returns a single promise. 
 This returned promise resolves when all the input promises are resolved or rejected. 
@@ -94,20 +93,74 @@ const prom1 = Promise.resolve(1)
 const prom2 = Promise.reject(2)
 const prom3 = Promise.resolve(3)
 
-Promise.allSettled([prom1,prom2,prom3]).then(console.log).catch(console.log)
+Promise.allSettled([prom1, prom2, prom3]).then(console.log).catch(console.log)
 
 // Fetching Multiple APIs with Errors
 const fetchUs = fetch("https://jsonplaceholder.typicode.com/users/1");
 const fetchPo = fetch("https://jsonplaceholder.typicode.com/posts");
 const fetchCo = fetch("https://jsonplaceholder.typicode.com/comments");
 
-Promise.allSettled([fetchUser,fetchPosts,fetchComments])
-        .then(results => {
-            results.forEach((result,index)=>{
-                if (result.status==="fulfilled") {
-                    console.log(`Promise ${index + 1} fulfilled with:`, result.value);                    
-                } else{
-                    console.error(`Promise ${index + 1} rejected with:`, result.reason);
-                }
-            })
+Promise.allSettled([fetchUser, fetchPosts, fetchComments])
+    .then(results => {
+        results.forEach((result, index) => {
+            if (result.status === "fulfilled") {
+                console.log(`Promise ${index + 1} fulfilled with:`, result.value);
+            } else {
+                console.error(`Promise ${index + 1} rejected with:`, result.reason);
+            }
         })
+    })
+
+
+// async await
+/*
+async and await are modern JavaScript features that make it easier to work with asynchronous code
+by allowing you to write it in a more synchronous, readable style.
+They are built on top of Promises.
+*/
+
+function fetchData() {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve("Data Fetched");
+        }, 2000);
+    })
+}
+
+async function getData() {
+    const data = await fetchData();
+    console.log(data);
+}
+
+// Parallel vs Sequential Execution
+
+async function sequential() {
+    const res1 = await new Promise(resolve => {
+        setTimeout(() => {
+            resolve('hello');
+        }, 1000);
+    })
+    const res2 = await new Promise(resolve => {
+        setTimeout(() => {
+            resolve('world');
+        }, 900);
+    })
+
+    console.log(res1, res2);
+}
+
+async function parallel() {
+    const res1 = await new Promise(resolve => {
+        setTimeout(() => {
+            resolve('hello');
+        }, 1000);
+    })
+    const res2 = await new Promise(resolve => {
+        setTimeout(() => {
+            resolve('world');
+        }, 900);
+    })
+
+    const res = await Promise.all([res1, res2]);
+    console.log(res);
+}
