@@ -43,3 +43,8 @@ if (!Array.prototype.includes) {
 let arr = [1, 2, 3];
 console.log(arr.includes(2)); // Output: true
 console.log(arr.includes(4)); // Output: false
+
+/*
+bind polyfill: Creates a new function with a pre-set this value and arguments.
+apply polyfill: Executes the function immediately with this and arguments passed dynamically.
+*/
