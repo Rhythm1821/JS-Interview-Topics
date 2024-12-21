@@ -47,4 +47,5 @@ console.log(arr.includes(4)); // Output: false
 /*
 bind polyfill: Creates a new function with a pre-set this value and arguments.
 apply polyfill: Executes the function immediately with this and arguments passed dynamically.
+call polyfill: Executes the function immediately with this and arguments passed dynamically.
 */
